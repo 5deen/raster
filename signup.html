@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up  — raster</title>
+    <meta
+      name="description"
+      content="Request access to the raster beta. The demo stays open to everyone; the beta list is for early access to what comes next."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Fonts are self-hosted from public/fonts; see @font-face in src/styles/main.css. -->
+    <link rel="preload" href="/fonts/sora-v10-latin-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/space-grotesk-v12-latin-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+  </head>
+
+  <body class="flex min-h-screen flex-col bg-slate-950 font-sans text-slate-200">
+    <a
+      href="#main"
+      class="sr-only rounded-md bg-indigo-600 px-4 py-3 text-sm font-medium text-white shadow-lg focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50"
+    >
+      Skip to content
+    </a>
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-40 border-b border-slate-800 bg-slate-950/80 backdrop-blur">
+      <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8" aria-label="Main">
+        <a href="./" class="flex items-center gap-3 rounded-md focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none">
+          <svg viewBox="0 0 300 300" class="h-9 w-9" aria-hidden="true">
+            <circle cx="150" cy="150" r="150" fill="#f54905" />
+            <circle cx="150" cy="150" r="90" fill="#ffffff" />
+            <rect x="50" y="50" width="100" height="100" fill="#f54905" />
+          </svg>
+          <span class="text-lg font-bold tracking-tight">raster</span>
+        </a>
+
+        <button
+          type="button"
+          data-nav-toggle
+          aria-controls="nav-menu"
+          aria-expanded="false"
+          class="flex h-10 w-10 items-center justify-center rounded-md focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none lg:hidden"
+        >
+          <span class="sr-only">Toggle navigation</span>
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+
+        <div
+          id="nav-menu"
+          data-nav-menu
+          class="absolute inset-x-0 top-full hidden border-b border-slate-800 bg-slate-950 px-4 pb-6 shadow-lg lg:static lg:flex lg:items-center lg:gap-8 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
+        >
+          <ul class="grid gap-1 py-4 lg:flex lg:items-center lg:gap-8 lg:py-0">
+            <li><a class="block py-2 font-medium transition-colors hover:text-primary" href="./#demo">Try it</a></li>
+            <li><a class="block py-2 font-medium transition-colors hover:text-primary" href="./signin.html">Sign in</a></li>
+          </ul>
+          <a
+            href="./signup.html"
+            aria-current="page"
+            class="inline-flex items-center rounded-xl border border-primary bg-primary/10 px-6 py-3 text-base text-primary transition-all duration-300 hover:bg-primary hover:text-secondary focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:outline-none"
+          >
+            Sign up
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main" class="flex-1">
+      <!-- Page header -->
+      <section class="relative isolate overflow-hidden bg-primary/5">
+        <div class="pointer-events-none absolute -top-64 left-1/2 -z-10 h-[700px] w-[700px] -translate-x-1/2 rounded-[45%] bg-primary/10 blur-3xl" aria-hidden="true"></div>
+        <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+          <div class="mx-auto max-w-3xl text-center">
+            <p class="mb-5 inline-flex items-center rounded-full border border-primary/20 bg-slate-900 px-4 py-1.5 text-sm font-semibold tracking-wider text-primary uppercase">
+              Beta
+            </p>
+            <h1 class="mb-6 text-4xl leading-tight font-bold sm:text-5xl md:text-6xl">
+              Join the <span class="gradient-text">beta</span>
+            </h1>
+            <p class="text-xl leading-relaxed text-slate-400">
+              The demo is open to everyone — no account needed. The beta list is for what comes after it.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <!--
+          Shown until AIRTABLE_BETA_FORM_URL is filled in in src/config.js.
+          main.js hides it and enables the button once a URL is configured.
+        -->
+        <aside data-beta-unconfigured class="mb-12 rounded-xl border-2 border-primary bg-primary/5 p-6">
+          <h2 class="mb-2 text-lg font-bold text-primary">Not connected yet</h2>
+          <p class="leading-relaxed text-slate-300">
+            The beta form is not linked up. Create a form on the <strong>Beta</strong> base in Airtable, copy its shared
+            form URL, and paste it into <code class="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-sm">AIRTABLE_BETA_FORM_URL</code>
+            in <code class="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-sm">src/config.js</code>. This notice
+            disappears on its own once it is set.
+          </p>
+        </aside>
+
+        <div class="space-y-12">
+          <section class="rounded-2xl bg-slate-900 p-6 shadow-xl ring-1 ring-slate-800 sm:p-10">
+            <h2 class="mb-4 text-2xl font-bold sm:text-3xl">Request access</h2>
+            <p class="mb-8 leading-relaxed text-slate-300">
+              Sign-up runs on an Airtable form. Following the link opens Airtable in a new tab — this site does not
+              collect anything itself, and nothing you enter passes through it.
+            </p>
+
+            <a
+              data-beta-form
+              href="#"
+              aria-disabled="true"
+              class="group inline-flex items-center gap-2 rounded-2xl border border-indigo-600 bg-indigo-600 px-8 py-4 text-lg font-bold tracking-wider text-white transition-all duration-300 ease-in-out hover:border-indigo-500 hover:bg-indigo-500 aria-disabled:pointer-events-none aria-disabled:opacity-40"
+            >
+              Open the beta form
+              <svg class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          </section>
+
+          <section>
+            <h2 class="mb-4 text-2xl font-bold sm:text-3xl">What happens to what you enter</h2>
+            <p class="mb-4 leading-relaxed text-slate-300">
+              The form asks for three things: your <strong>name</strong>, your <strong>email address</strong>, and
+              whether you want the <strong>newsletter</strong>. The newsletter is a separate yes-or-no — saying no still
+              puts you on the beta list, and your address is then never used for anything else.
+            </p>
+            <p class="mb-4 leading-relaxed text-slate-300">
+              Airtable, Inc. receives and stores your submission — it is the processor for the beta list, and it is based
+              in the United States, so signing up involves a transfer to a third country. Section 6 of the
+              <a class="font-semibold text-primary underline" href="./privacy.html">privacy policy</a> sets out the
+              detail: the legal basis for each purpose, how long each is kept, and how to withdraw either one.
+            </p>
+            <p class="leading-relaxed text-slate-300">
+              You can ask for your entry to be removed at any time, without giving a reason, by writing to the address on
+              the <a class="font-semibold text-primary underline" href="./contact.html">contact page</a>.
+            </p>
+          </section>
+
+          <section class="rounded-xl border border-slate-800 bg-slate-900 p-6">
+            <h2 class="mb-3 text-lg font-bold">You do not need an account to try it</h2>
+            <p class="leading-relaxed text-slate-300">
+              The pattern demo on the home page is open to everyone and always will be. It runs entirely in your browser,
+              so gating it behind a login would be theatre — the code is already on your machine either way. Signing up
+              gets you early access to what comes next, not access to the demo.
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative border-t border-slate-800 bg-slate-950 pt-16 pb-12 sm:pb-16 2xl:pt-24">
+      <div class="w-full px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl 2xl:max-w-[1500px]">
+          <div class="flex flex-wrap">
+            <div class="order-2 w-full lg:order-1 lg:mr-auto lg:w-1/3">
+              <div class="mt-7 text-center sm:text-left md:mt-0 lg:text-left">
+                <a href="./" class="mb-6 inline-flex items-center gap-3 sm:mb-5">
+                  <svg viewBox="0 0 300 300" class="h-10 w-10" aria-hidden="true">
+                    <circle cx="150" cy="150" r="150" fill="#f54905" />
+                    <circle cx="150" cy="150" r="90" fill="#ffffff" />
+                    <rect x="50" y="50" width="100" height="100" fill="#f54905" />
+                  </svg>
+                  <span class="text-lg font-bold text-white">raster</span>
+                </a>
+                <p class="mb-6 text-sm font-semibold text-slate-400 sm:mb-8">
+                  Text-based pattern design.
+                </p>
+              </div>
+            </div>
+
+            <div class="order-1 w-full lg:w-2/3">
+              <div class="flex flex-wrap">
+                <div class="w-1/2 px-4 md:w-1/5">
+                  <div class="mb-6 sm:mb-8 lg:mb-8">
+                    <h2 class="mb-6 text-sm font-semibold text-slate-400 opacity-70">Explore</h2>
+                    <ul class="space-y-2">
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="./#demo">Try it</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="w-1/2 px-4 md:w-1/5">
+                  <div class="mb-6 sm:mb-8 lg:mb-8">
+                    <h2 class="mb-6 text-sm font-semibold text-slate-400 opacity-70">Beta</h2>
+                    <ul class="space-y-2">
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="./signup.html">Sign up</a></li>
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="./signin.html">Sign in</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="w-1/2 px-4 md:w-1/5">
+                  <div class="mb-6 sm:mb-8 lg:mb-8">
+                    <h2 class="mb-6 text-sm font-semibold text-slate-400 opacity-70">Project</h2>
+                    <ul class="space-y-2">
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="https://github.com/5deen/raster">Source</a></li>
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="https://github.com/5deen/raster/issues">Issues</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="w-1/2 px-4 md:w-1/5">
+                  <div class="mb-6 sm:mb-8 lg:mb-8">
+                    <h2 class="mb-6 text-sm font-semibold text-slate-400 opacity-70">Legal</h2>
+                    <ul class="space-y-2">
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="./privacy.html">Privacy</a></li>
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="./contact.html">Contact</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="w-1/2 px-4 md:w-1/5">
+                  <div class="mb-6 sm:mb-8 lg:mb-8">
+                    <h2 class="mb-6 text-sm font-semibold text-slate-400 opacity-70">External</h2>
+                    <ul class="space-y-2">
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="https://5deen.com">5deen</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-10 border-t border-slate-800 pt-8">
+            <p class="text-sm text-slate-400">
+              &copy; <span data-year>2026</span> raster. MIT licensed. Layout adapted from the
+              <a class="text-link hover:underline" href="https://github.com/CloudCannon/sendit-astro-template">SendIt</a>
+              template by CloudCannon.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
