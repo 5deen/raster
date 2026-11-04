@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>raster — turn text into geometric patterns</title>
+    <title>raster — publish the picture, keep the phrase</title>
     <meta
       name="description"
-      content="raster turns a text phrase into a grid of colored geometric shapes. The grid is public; only the mapping is secret."
+      content="raster turns a phrase into a grid of geometric blocks, drawn in your browser. Show the grid anywhere; only someone who knows the phrase can draw it again."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <!-- Fonts are self-hosted from public/fonts; see @font-face in src/styles/main.css. -->
@@ -54,7 +54,9 @@
           class="absolute inset-x-0 top-full hidden border-b border-slate-800 bg-slate-950 px-4 pb-6 shadow-lg lg:static lg:flex lg:items-center lg:gap-8 lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none"
         >
           <ul class="grid gap-1 py-4 lg:flex lg:items-center lg:gap-8 lg:py-0">
+            <li><a class="block py-2 font-medium transition-colors hover:text-primary" href="#how-it-works">How it works</a></li>
             <li><a class="block py-2 font-medium transition-colors hover:text-primary" href="#demo">Try it</a></li>
+            <li><a class="block py-2 font-medium transition-colors hover:text-primary" href="#use-cases">Use cases</a></li>
             <li><a class="block py-2 font-medium transition-colors hover:text-primary" href="./signin.html">Sign in</a></li>
           </ul>
           <a
@@ -75,22 +77,15 @@
 
         <div class="mx-auto max-w-[1500px] px-6 pt-16 pb-24 sm:pb-32 lg:px-8 lg:py-32">
           <div class="mx-auto max-w-2xl">
-            <!--
-              Placeholder copy. It states only what the demo below provably
-              does, so the page is honest while raster decides how it wants to
-              introduce itself. Replace the eyebrow, the heading and the
-              paragraph together; do not let a claim outrun the Not a cipher
-              card further down.
-            -->
             <p class="mb-5 inline-flex items-center rounded-full border border-primary/20 bg-slate-900 px-4 py-1.5 text-sm font-semibold tracking-wider text-primary uppercase">
               A 5deen product
             </p>
             <h1 class="mb-6 text-4xl leading-tight font-bold sm:text-5xl md:text-6xl lg:text-7xl">
-              raster
+              Publish the picture. <span class="gradient-text">Keep the phrase.</span>
             </h1>
             <p class="text-pretty text-xl leading-relaxed text-slate-400">
-              Type a phrase and raster draws it as a grid of geometric blocks, entirely in your browser. Type the same
-              phrase again and the same grid comes back; change one character and the picture changes with it.
+              raster turns a phrase into a grid of geometric blocks, drawn in your browser and nowhere else. Showing the
+              grid costs you nothing; drawing it again takes the phrase. That asymmetry is the whole product.
             </p>
             <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
               <a
@@ -99,6 +94,67 @@
               >
                 Try it now
               </a>
+              <a
+                href="#how-it-works"
+                class="group inline-flex items-center gap-2 border-0 bg-transparent text-lg font-bold tracking-wider text-primary transition-all duration-300 hover:text-primary/80"
+              >
+                See how it works
+                <svg class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- How it works -->
+      <section id="how-it-works" class="scroll-mt-20 py-16 sm:py-24">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto mb-12 max-w-2xl text-center">
+            <h2 class="pb-6 text-3xl leading-tight font-bold sm:text-4xl md:text-5xl lg:text-6xl">
+              How it <span class="gradient-text">works</span>
+            </h2>
+            <p class="text-lg text-slate-400">
+              Three steps. Nothing is sent anywhere, and the only thing that has to stay yours is the phrase.
+            </p>
+          </div>
+
+          <div class="mx-auto w-full space-y-16 lg:w-2/3">
+            <div>
+              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step one</p>
+              <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl">
+                Every character becomes a block
+              </h3>
+              <p class="text-lg leading-relaxed text-slate-400">
+                Each character of your phrase selects a block from the chosen image set. raster reads the first sixteen
+                characters, reorders them into every rotation of the sequence, and lays the result out on the smallest
+                square grid that fits. Letters, digits, punctuation and umlauts all map to a block.
+              </p>
+            </div>
+
+            <div>
+              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step two</p>
+              <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl">
+                The grid is made to be shown
+              </h3>
+              <p class="text-lg leading-relaxed text-slate-400">
+                Print it, pin it to a wall, put it on a page or beside a name. What the grid carries is the picture — not
+                the mapping, and not the phrase. The file raster saves has the generator's metadata stripped out, and it
+                is named after the image set and the moment you saved it, never after what you typed.
+              </p>
+            </div>
+
+            <div>
+              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step three</p>
+              <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl">
+                Drawing it again is the proof
+              </h3>
+              <p class="text-lg leading-relaxed text-slate-400">
+                Type the phrase back in and raster regenerates the grid from scratch. A correct phrase reproduces the
+                file you saved exactly; a single wrong character changes the sequence, and with it the picture. Put the
+                two side by side. If they match, you have shown you know the phrase without ever saying it.
+              </p>
             </div>
           </div>
         </div>
@@ -200,6 +256,66 @@
         </div>
       </section>
 
+      <!-- Use cases -->
+      <section id="use-cases" class="scroll-mt-20 py-16 sm:py-24">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto mb-12 max-w-2xl text-center">
+            <h2 class="pb-6 text-3xl leading-tight font-bold sm:text-4xl md:text-5xl lg:text-6xl">
+              Use <span class="gradient-text">cases</span>
+            </h2>
+            <p class="text-lg text-slate-400">
+              Each one turns on the same asymmetry: the grid is public, and only someone who knows the phrase can draw
+              it again.
+            </p>
+          </div>
+
+          <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <li class="rounded-xl border border-slate-800 bg-slate-900 p-6">
+              <svg class="mb-4 h-6 w-6 text-primary" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" aria-hidden="true">
+                <path d="M50 14 L86 50 L50 86 L14 50 Z" />
+              </svg>
+              <h3 class="mb-3 text-lg font-semibold text-white">Check that you still know a phrase</h3>
+              <p class="leading-relaxed text-slate-300">
+                Keep the grid with a backup — a recovery sheet, a seed kit, a safe. Months later, type the phrase you
+                think it is. A matching picture confirms you have it right, and the sheet in the drawer never had the
+                phrase written on it.
+              </p>
+            </li>
+            <li class="rounded-xl border border-slate-800 bg-slate-900 p-6">
+              <svg class="mb-4 h-6 w-6 text-primary" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" aria-hidden="true">
+                <path d="M50 14 L81 32 V68 L50 86 L19 68 V32 Z" />
+              </svg>
+              <h3 class="mb-3 text-lg font-semibold text-white">A maker&rsquo;s mark you can redraw</h3>
+              <p class="leading-relaxed text-slate-300">
+                Stamp the grid on ceramics, prints, bindings or furniture. Anyone can photograph a mark and copy it.
+                What a copier cannot do is stand in front of a buyer and generate it again from the phrase.
+              </p>
+            </li>
+            <li class="rounded-xl border border-slate-800 bg-slate-900 p-6">
+              <svg class="mb-4 h-6 w-6 text-primary" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="50" cy="50" r="32" />
+              </svg>
+              <h3 class="mb-3 text-lg font-semibold text-white">Hold a name that is not your own</h3>
+              <p class="leading-relaxed text-slate-300">
+                Work under a handle and put the grid on the profile and the work. When the account is impersonated, or
+                when you move to another platform, you settle it by drawing the grid again in front of whoever is
+                asking.
+              </p>
+            </li>
+            <li class="rounded-xl border border-slate-800 bg-slate-900 p-6">
+              <svg class="mb-4 h-6 w-6 text-primary" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linejoin="round" aria-hidden="true">
+                <rect x="20" y="20" width="60" height="60" rx="6" />
+              </svg>
+              <h3 class="mb-3 text-lg font-semibold text-white">Show a notice came from the group</h3>
+              <p class="leading-relaxed text-slate-300">
+                A club, a co-op, a conference: put the grid on posters, badges and door notices. Anyone who knows the
+                shared phrase can tell a real notice from one somebody else put up.
+              </p>
+            </li>
+          </ul>
+        </div>
+      </section>
+
       <!--
         The threat model, not positioning. The page invites people to publish
         a pattern, so it has to say what publishing one does and does not
@@ -273,7 +389,9 @@
                   <div class="mb-6 sm:mb-8 lg:mb-8">
                     <h2 class="mb-6 text-sm font-semibold text-slate-400 opacity-70">Explore</h2>
                     <ul class="space-y-2">
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="#how-it-works">How it works</a></li>
                       <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="#demo">Try it</a></li>
+                      <li><a class="block px-1 py-2 font-semibold text-white transition-all duration-300 ease-in-out hover:text-primary" href="#use-cases">Use cases</a></li>
                     </ul>
                   </div>
                 </div>
