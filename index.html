@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>raster — publish the picture, keep the phrase</title>
+    <title>Raster — turn text into geometric patterns</title>
     <meta
       name="description"
-      content="raster turns a phrase into a grid of geometric blocks, drawn in your browser. Show the grid anywhere; only someone who knows the phrase can draw it again."
+      content="Raster assigns a geometric shape to each character in a text and arranges them on a grid, drawn entirely in your browser."
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <!-- Fonts are self-hosted from public/fonts; see @font-face in src/styles/main.css. -->
@@ -32,7 +32,7 @@
             <circle cx="150" cy="150" r="90" fill="#ffffff" />
             <rect x="50" y="50" width="100" height="100" fill="#f54905" />
           </svg>
-          <span class="text-lg font-bold tracking-tight">raster</span>
+          <span class="text-lg font-bold tracking-tight">Raster</span>
         </a>
 
         <button
@@ -81,11 +81,11 @@
               A 5deen product
             </p>
             <h1 class="mb-6 text-4xl leading-tight font-bold sm:text-5xl md:text-6xl lg:text-7xl">
-              Publish the picture. <span class="gradient-text">Keep the phrase.</span>
+              Turn text into <span class="gradient-text">geometric patterns</span>.
             </h1>
             <p class="text-pretty text-xl leading-relaxed text-slate-400">
-              raster turns a phrase into a grid of geometric blocks, drawn in your browser and nowhere else. Showing the
-              grid costs you nothing; drawing it again takes the phrase. That asymmetry is the whole product.
+              Raster assigns a geometric shape to each character in a text and arranges them on a grid
+              (in German: <span lang="de">&bdquo;Raster&ldquo;</span>).
             </p>
             <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
               <a
@@ -116,44 +116,40 @@
               How it <span class="gradient-text">works</span>
             </h2>
             <p class="text-lg text-slate-400">
-              Three steps. Nothing is sent anywhere, and the only thing that has to stay yours is the phrase.
+              The application works on three different steps.
             </p>
           </div>
 
           <div class="mx-auto w-full space-y-16 lg:w-2/3">
             <div>
-              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step one</p>
+              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step 1</p>
               <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl">
-                Every character becomes a block
+                Character mapping
               </h3>
               <p class="text-lg leading-relaxed text-slate-400">
-                Each character of your phrase selects a block from the chosen image set. raster reads the first sixteen
-                characters, reorders them into every rotation of the sequence, and lays the result out on the smallest
-                square grid that fits. Letters, digits, punctuation and umlauts all map to a block.
+                The first layer is a mechanism by which the characters of a text map to geometric blocks.
               </p>
             </div>
 
             <div>
-              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step two</p>
+              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step 2</p>
               <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl">
-                The grid is made to be shown
+                Arrangements
               </h3>
               <p class="text-lg leading-relaxed text-slate-400">
-                Print it, pin it to a wall, put it on a page or beside a name. What the grid carries is the picture — not
-                the mapping, and not the phrase. The file raster saves has the generator's metadata stripped out, and it
-                is named after the image set and the moment you saved it, never after what you typed.
+                On the next layer, an algorithm arranges the blocks in a particular division and order.
               </p>
             </div>
 
             <div>
-              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step three</p>
+              <p class="mb-4 text-sm font-bold tracking-widest text-primary uppercase">Step 3</p>
               <h3 class="pb-6 text-2xl leading-tight font-bold sm:text-3xl md:text-4xl">
-                Drawing it again is the proof
+                Fit into a grid
               </h3>
               <p class="text-lg leading-relaxed text-slate-400">
-                Type the phrase back in and raster regenerates the grid from scratch. A correct phrase reproduces the
-                file you saved exactly; a single wrong character changes the sequence, and with it the picture. Put the
-                two side by side. If they match, you have shown you know the phrase without ever saying it.
+                The third layer takes the arrangements from the previous layer and orders them to fit into a grid. A
+                grid is the essential element of the pattern composition. The grid side is the smallest integer whose
+                square covers all symbol slots. Surplus panels repeat symbols from the start of the sequence.
               </p>
             </div>
           </div>
@@ -168,7 +164,7 @@
               Try it <span class="gradient-text">yourself</span>
             </h2>
             <p class="text-lg text-slate-400">
-              Type a phrase and the raster generator draws it, entirely in your browser. No data is sent or stored
+              Type a phrase and the Raster generator draws it, entirely in your browser. No data is sent or stored
               anywhere. Download the SVG document if the result is fine for you.
             </p>
           </div>
@@ -319,7 +315,7 @@
       <!--
         The threat model, not positioning. The page invites people to publish
         a pattern, so it has to say what publishing one does and does not
-        protect. Rewrite the wording when raster has a voice; do not drop the
+        protect. Rewrite the wording when Raster has a voice; do not drop the
         three statements.
       -->
       <section id="what-this-is" class="scroll-mt-20 bg-slate-900 py-16 lg:py-24">
@@ -375,7 +371,7 @@
                     <circle cx="150" cy="150" r="90" fill="#ffffff" />
                     <rect x="50" y="50" width="100" height="100" fill="#f54905" />
                   </svg>
-                  <span class="text-lg font-bold text-white">raster</span>
+                  <span class="text-lg font-bold text-white">Raster</span>
                 </a>
                 <p class="mb-6 text-sm font-semibold text-slate-400 sm:mb-8">
                   Text-based pattern design.
@@ -436,7 +432,7 @@
 
           <div class="mt-10 border-t border-slate-800 pt-8">
             <p class="text-sm text-slate-400">
-              &copy; <span data-year>2026</span> raster. MIT licensed. Layout adapted from the
+              &copy; <span data-year>2026</span> Raster. MIT licensed. Layout adapted from the
               <a class="text-link hover:underline" href="https://github.com/CloudCannon/sendit-astro-template">SendIt</a>
               template by CloudCannon.
             </p>
