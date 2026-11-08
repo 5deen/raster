@@ -27,7 +27,18 @@ rejected rather than guessed at:
 grep -o 'lib[0-9]*\.set("[^"]*"' FILE | sed 's/.*set("//; s/"$//' | sed 's/_[0-9]*$//' | sort -u
 ```
 
-One line out means one library. More than one means stop and ask.
+One line out means one library. More than one usually means stop and ask, but
+first check whether the keys are simply not all `_NNN`. `network_pattern_v3.20`
+runs `_001`–`_003`, then descriptive suffixes such as `_001_edge3_grey_07` and
+`_black`, which this check prints as a dozen lines. Take the shortest line as
+the candidate id and confirm that every key starts with `<id>_`:
+
+```bash
+grep -o 'lib[0-9]*\.set("[^"]*"' FILE | sed 's/.*set("//; s/"$//' | grep -vc "^${ID}_"   # must print 0
+```
+
+Descriptive keys are harmless. `setImageSets()` takes the map's values in
+insertion order and never reads a key, so only the shared prefix matters.
 
 The **binding** is the id with `.` replaced by `_`
 (`cascading_orientation_pattern_v3_12`). AssemblyScript identifiers and module

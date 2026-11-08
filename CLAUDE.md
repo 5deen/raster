@@ -136,22 +136,30 @@ block keys share; keys run `<id>_001` upwards.
 | `cascading_orientation_pattern_v3.15` | 102 | ~1.3 MB | lavender/navy half-split, per-block rotation |
 | `cascading_orientation_pattern_v2.11` | 193 | ~1.7 MB | blue; recolored, see below |
 | `cascading_square_pattern_v3.16` | 102 | ~3.3 MB | one black cell in a 10×10 grid; **does not discriminate**, see below |
+| `network_pattern_v3.20` | 102 | ~1.1 MB | black node-and-edge network on white, grey node fills; **does not discriminate**, see below |
 
-**The shipping set is settled at these six, 10.7 MB vendored**, and that
-includes `v3.16`. Only the selected library is ever downloaded, so the cost is
-repository size rather than page weight, and growing the set is one
+**The shipping set is settled at these seven, 11.8 MB vendored**, and that
+includes `v3.16` and `v3.20`. Only the selected library is ever downloaded, so
+the cost is repository size rather than page weight, and growing the set is one
 `add-library` pass.
 
-`v3.16` is the first library outside the `cascading_orientation_pattern` family
-and the only one that does not meet the bar in **Judging a new library** below.
-It was added on request, measured, and **kept on an explicit decision** with the
-figures recorded rather than buried. Do not drop it as a tidy-up: removing it is
-a product decision, the same as adding it was. What the measurement means for
-the page is the part to keep in view — the picker offers a set that a reader
-cannot read a changed character out of, so do not cite `v3.16` in copy about
-patterns being visibly different, and do not make it the default.
+`v3.16` and `v3.20` are the two libraries outside the
+`cascading_orientation_pattern` family, and the only two that do not meet the
+bar in **Judging a new library** below. Each was added on request, measured, and
+**kept on an explicit decision** with the figures recorded rather than buried.
+Do not drop either as a tidy-up: removing one is a product decision, the same as
+adding it was. What the measurement means for the page is the part to keep in
+view — the picker offers sets that a reader cannot read a changed character out
+of, so do not cite `v3.16` or `v3.20` in copy about patterns being visibly
+different, and do not make either the default.
 
-A library id can carry a **dot**, as all six do. AssemblyScript identifiers and
+`v3.20` is also the one library whose keys do not all run `<id>_NNN`: only
+`_001`–`_003` do, and the rest are descriptive (`_001_edge3_grey_07`,
+`_black`). That is harmless — `setImageSets()` takes the map's values in
+insertion order and never reads a key — but it is why the `add-library`
+prefix check prints more than one line for it. Every key does start with the id.
+
+A library id can carry a **dot**, as all seven do. AssemblyScript identifiers and
 module filenames cannot, so the map binding and the file under `medigeist-src/`
 use `_` where the id uses `.` (`cascading_orientation_pattern_v3_12`). The id
 with the dot is what the vendored directory, the `LIBRARIES` entry and the saved
@@ -169,7 +177,7 @@ separate repository this one cannot push to.
   (`a–z A–Z 0–9`, punctuation, `ÄÖÜäöü ß`), and the mapping is positional: the
   Nth character draws block N. So **only blocks 001–102 are ever reachable**.
   `v3.12` and `v2.11` carry 193 blocks and can never draw 91 of them; `v3.14`
-  can never draw 26. `v3.13`, `v3.15` and `v3.16` are exact fits. Trimming the
+  can never draw 26. `v3.13`, `v3.15`, `v3.16` and `v3.20` are exact fits. Trimming the
   oversized libraries to 102 blocks would cut roughly 0.4 MB each with provably
   identical output — worth doing only if the glyph table is not going to grow.
 - **One document shows at most 16 distinct blocks**, one per distinct character
@@ -177,7 +185,7 @@ separate repository this one cannot push to.
 - **Every build exposes exactly one image set, always `set0`**, because
   `setMapsArray()` names sets positionally. That name is hard-coded in
   `medigeist.js`; it is not a free choice.
-- **A build is 1.3–3.3 MB.** Builds are fetched lazily — when the demo scrolls
+- **A build is 1.1–3.3 MB.** Builds are fetched lazily — when the demo scrolls
   near or the field is focused, never on page load — cached per library, and
   keystrokes are debounced. Do not move the first render back to load time.
   Only the selected library is downloaded; do not preload the others.
@@ -186,7 +194,9 @@ separate repository this one cannot push to.
   AssemblyScript holds those strings as UTF-16, so a build is about twice its
   `medigeist-src/` file. That is why `v3.16` reaches 3.3 MB on 102 blocks: each
   of its blocks is a hundred `<rect>` elements. Its renders are ~290 KB rather
-  than ~150 KB.
+  than ~150 KB. Render size follows the *document*, not the build: `v3.20` has
+  the smallest build at 1.1 MB, yet a saved `v3.20` SVG is ~550 KB, the largest
+  of any library.
 - **It runs entirely in the browser**, every file served from this origin, which
   is what keeps the privacy claims true.
 - **Its output carries the phrase in plain text.** Every document opens with a
@@ -313,10 +323,48 @@ What follows from keeping it:
 - No page copy may cite it as an example of a changed character being visible,
   because for this library that is not true.
 - A better version of the same idea would vary the black cells in *count* as
-  well as position. If one arrives, replace `v3.16` rather than adding a
-  seventh set beside it.
+  well as position. If one arrives, replace `v3.16` rather than adding another
+  set beside it.
 
 Dropping it later is a product decision and takes one `remove-library` pass.
+
+#### `v3.20` fails the same way, for a different reason
+
+Every block is the same black-and-white network: a central node joined to eight
+neighbours (NW, N, NE, W, E, SW, S, SE). What varies between blocks is mostly
+the grey fill of one small node, plus which of the eight edge ends is filled.
+All 102 blocks are pixel-distinct, but neighbouring blocks differ on a median of
+**0.5%** of their pixels, so the panel reads as an even grey dot field whatever
+the phrase.
+
+Measured on its own harness at 1080², ±16 per channel, five one-character pairs
+(`Correct Horse 42` against `…43`, `Dorrect…`, `…Morse…`, and two more) and one
+unrelated pair. The other libraries were re-measured on the same harness so the
+rows compare; they do not compare with either table above:
+
+| Library | One character off (five pairs) | Unrelated phrase |
+| --- | --- | --- |
+| `v3.13` | 0.40–6.09% | 50.6% |
+| `v3.16` | 0.11–0.27% | 2.36% |
+| `v3.20` | **0.00–1.58%** | **12.7%** |
+
+Three of the five pairs move under 0.1% of pixels, and `Correct Horse 42`
+against `Correct Horse 43` moves none at ±16. Its ceiling is above `v3.16`'s and
+still a quarter of the weakest cascading library on this harness.
+
+`recolor.py` was tried on a scratch copy and **did not visibly rescue it**. The
+blocks do share a white `rect.canvas`, so the script runs. A greyscale band
+(`--light 55 95 --sat 0 0`, reference `v3.12`) reads as a rescue at ±4 per
+channel (5–6.5% one character off, 82% unrelated). At ±48, two of the five pairs
+fall back to 0.01%, and side by side the recolored pattern looks the same as the
+original. The network drawing covers most of each block, so a canvas tint barely
+shows. A recolor strong enough to show would have to give up the black-and-white
+look, which is a design change, not a fix. Do not ship a recolor on the strength
+of a low-tolerance figure.
+
+**It ships as supplied, by decision**, on the same terms as `v3.16`. It is not
+the default; it sits last in `LIBRARIES`. No page copy may cite it as showing a
+changed character. Dropping it is one `remove-library` pass.
 
 ## Legal pages
 

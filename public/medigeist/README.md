@@ -4,7 +4,7 @@ Prebuilt WebAssembly build of [asc-set-generator](https://github.com/5deen/asc-s
 vendored so the demo has no external dependency. MIT licensed.
 
 One directory per block library, named after the prefix its block keys share.
-The demo ships six:
+The demo ships seven:
 
 | Directory | Blocks | Keys | Build |
 | --- | --- | --- | --- |
@@ -14,6 +14,7 @@ The demo ships six:
 | `cascading_orientation_pattern_v3.15` | 102 | `…_001` … `_102` | ~1.3 MB |
 | `cascading_orientation_pattern_v2.11` | 193 | `…_001` … `_193` | ~1.7 MB |
 | `cascading_square_pattern_v3.16` | 102 | `…_001` … `_102` | ~3.3 MB |
+| `network_pattern_v3.20` | 102 | `…_001` … `_003`, then descriptive | ~1.1 MB |
 
 Across the five `cascading_orientation_pattern` libraries the build size tracks
 the block count, which is the only thing that varies between them at that scale.
@@ -24,8 +25,14 @@ size really tracks is the byte length of the base64 payloads in the source —
 AssemblyScript stores those strings as UTF-16, so a build lands at roughly twice
 its `medigeist-src/` file.
 
-`v3.16` does not discriminate: see **Judging a new library** in `CLAUDE.md`
-before relying on it.
+`network_pattern_v3.20` has the smallest build of the set, because its blocks
+are simple, yet it renders the largest documents (~550 KB saved). Its keys run
+`…_001` to `…_003`, then turn descriptive (`…_001_edge3_grey_07`, `…_black`).
+The generator takes blocks in insertion order and never reads the keys, so
+this does not matter. Every key still starts with the id.
+
+`v3.16` and `v3.20` do not discriminate: see **Judging a new library** in
+`CLAUDE.md` before relying on either.
 
 A library name can carry a dot, as these do. AssemblyScript identifiers and
 module filenames cannot, so the map binding and the file under `medigeist-src/`

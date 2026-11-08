@@ -28,7 +28,8 @@ export const GLYPH_LIMIT = 16;
  * The block libraries offered by the demo, in order.
  *
  * `id` is the directory under public/medigeist and the name the library has in
- * the generator — the prefix its block keys share, which run `<id>_001` upwards.
+ * the generator — the prefix its block keys share, which usually run
+ * `<id>_001` upwards. Block order comes from the source file, never the keys.
  * `label` is what the picker shows. The first entry is the default.
  *
  * Everything downstream is written for a list, so adding a build means adding
@@ -46,6 +47,7 @@ export const LIBRARIES = [
   { id: 'cascading_orientation_pattern_v3.15', label: 'Cascading orientation v3.15' },
   { id: 'cascading_orientation_pattern_v2.11', label: 'Cascading orientation v2.11' },
   { id: 'cascading_square_pattern_v3.16', label: 'Cascading square v3.16' },
+  { id: 'network_pattern_v3.20', label: 'Network v3.20' },
 ];
 
 /** The library the demo opens with. */
