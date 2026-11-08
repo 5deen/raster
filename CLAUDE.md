@@ -117,8 +117,8 @@ nothing else. The **Image set** picker is generated from it and hides itself
 while there is only one library, since a select with one option is a control
 that cannot do anything. The first entry is the default.
 
-Adding and removing a library are written up as the `add-library` and
-`remove-library` skills in `.claude/skills/`. They exist because the work spans
+Adding and removing a library are written up as the `add-image-set` and
+`remove-image-set` skills in `.claude/skills/`. They exist because the work spans
 four places — the build, `public/medigeist/<id>/`, `medigeist-src/` and
 `LIBRARIES` — and missing one leaves either a picker entry that 404s or a
 megabyte of dead weight. Use them rather than doing it by hand.
@@ -141,7 +141,7 @@ block keys share; keys run `<id>_001` upwards.
 **The shipping set is settled at these seven, 11.8 MB vendored**, and that
 includes `v3.16` and `v3.20`. Only the selected library is ever downloaded, so
 the cost is repository size rather than page weight, and growing the set is one
-`add-library` pass.
+`add-image-set` pass.
 
 `v3.16` and `v3.20` are the two libraries outside the
 `cascading_orientation_pattern` family, and the only two that do not meet the
@@ -156,7 +156,7 @@ different, and do not make either the default.
 `v3.20` is also the one library whose keys do not all run `<id>_NNN`: only
 `_001`–`_003` do, and the rest are descriptive (`_001_edge3_grey_07`,
 `_black`). That is harmless — `setImageSets()` takes the map's values in
-insertion order and never reads a key — but it is why the `add-library`
+insertion order and never reads a key — but it is why the `add-image-set`
 prefix check prints more than one line for it. Every key does start with the id.
 
 A library id can carry a **dot**, as all seven do. AssemblyScript identifiers and
@@ -268,7 +268,7 @@ verdict: read it alongside the rendering.**
 
 The one real failure in the inherited set looked like this: as supplied, every
 block in `v2.11` shared one canvas fill, so it rendered as a uniform dot field —
-deterministic, and unreadable, at 0.6%. `.claude/skills/add-library/recolor.py`
+deterministic, and unreadable, at 0.6%. `.claude/skills/add-image-set/recolor.py`
 fixed it to 9.47% by giving each block the reference library's *position* within
 its hue, lightness and saturation ranges, remapped into `v2.11`'s own bands.
 Recolor when the **rendering** is uniform, not when a number is low. The script
@@ -326,7 +326,7 @@ What follows from keeping it:
   well as position. If one arrives, replace `v3.16` rather than adding another
   set beside it.
 
-Dropping it later is a product decision and takes one `remove-library` pass.
+Dropping it later is a product decision and takes one `remove-image-set` pass.
 
 #### `v3.20` fails the same way, for a different reason
 
@@ -364,7 +364,7 @@ of a low-tolerance figure.
 
 **It ships as supplied, by decision**, on the same terms as `v3.16`. It is not
 the default; it sits last in `LIBRARIES`. No page copy may cite it as showing a
-changed character. Dropping it is one `remove-library` pass.
+changed character. Dropping it is one `remove-image-set` pass.
 
 ## Legal pages
 

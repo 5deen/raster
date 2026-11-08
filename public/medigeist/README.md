@@ -102,5 +102,5 @@ payloads, which corrupts block images while still building cleanly.
 `--sourceMap false` writes a stray file literally named `false` beside the
 output; delete it and `release.wat`, neither of which is vendored.
 
-Adding or removing a library end to end is written up as the `add-library` and
-`remove-library` skills under `.claude/skills/`.
+Adding or removing a library end to end is written up as the `add-image-set` and
+`remove-image-set` skills under `.claude/skills/`.
