@@ -1,13 +1,20 @@
 ---
-name: add-library
-description: Add a Medigeist block library to the Geistgrid demo from an AssemblyScript .ts lib file (a `export const libN = new Map<string,string>()` of base64 block images). Use when the user supplies or points at such a file and wants it available in the Try it yourself image set picker. Covers deriving the library name, building the WASM, vendoring it, and registering it.
+name: add-image-set
+description: Add an image set (a Medigeist block library) to Raster's Image set picker from an attached or referenced AssemblyScript .ts file — an `export const libN = new Map<string,string>()` of base64 block SVGs. Use when the user attaches such a file, or asks to add, import or ship a new image set or library. Covers deriving the id, building the WASM, vendoring it, registering it in LIBRARIES, measuring whether its blocks are visibly distinct, and updating the docs.
 ---
 
-# Add a block library
+# Add an image set
 
-Turns one uploaded `lib*.ts` file into a library the demo can select. Every step
-below is load-bearing; skipping the build and hand-editing `LIBRARIES` produces
-a picker entry that 404s at runtime.
+Turns one attached `lib*.ts` file into an image set the demo can select. The
+picker calls it an **image set**; the code and docs call it a **library**; they
+are the same thing. Every step below is load-bearing; skipping the build and
+hand-editing `LIBRARIES` produces a picker entry that 404s at runtime.
+
+Work on a branch, never on `main`: a push to `main` deploys the site, and
+whether a set ships can still be open after it is built (step 6).
+
+An attached file is large (≈0.5 MB+). Do not read it whole; inspect it with
+`grep`/`head` and decode individual blocks as needed.
 
 ## 1. Read the file and derive the name
 
@@ -130,7 +137,10 @@ Do not skip this — a wrong build fails silently and looks fine in the markup.
 1. `npm run build`, then `npx vite preview`.
 2. In a browser: the picker offers the new label, selecting it fetches
    `/<id>/release.wasm` **and nothing else**, a pattern draws, and a download is
-   named after the library.
+   named after the library. The phrase must appear nowhere in the saved SVG.
+   Block payloads carry their own `<desc>` elements, which `toFileDocument()`
+   drops along with the rest. Note the saved size too, because it varies far
+   more than build size does (~150 KB for most sets, ~550 KB for `v3.20`).
 3. The generator agrees about itself: `setNames()` returns `['set0']`, and
    `createSVGDocument(800, 'set0', 'x')` called twice returns identical strings.
 4. **Check the pictures actually differ.** Render one phrase and the same phrase
@@ -144,7 +154,7 @@ Do not skip this — a wrong build fails silently and looks fine in the markup.
    not is `recolor.py`, next to this file:
 
    ```bash
-   python3 .claude/skills/add-library/recolor.py medigeist-src/<binding>.ts \
+   python3 .claude/skills/add-image-set/recolor.py medigeist-src/<binding>.ts \
      --reference medigeist-src/<a-library-that-reads-well>.ts \
      --hue 196 224 --light 38 77 --sat 24 52
    ```
@@ -159,18 +169,41 @@ Do not skip this — a wrong build fails silently and looks fine in the markup.
 
    **The number is evidence, not a verdict, and the tool does not fit every
    library.** Measure two unrelated phrases as well: that is the library's
-   ceiling, and every library shipped so far clears 93%, so a low
-   one-character figure means the change is small rather than that the library
-   cannot discriminate. `v3.13` measures 2.18% and ships unrecoloured because it
+   ceiling. The five cascading libraries clear it comfortably, so for them a low
+   one-character figure means the change is small, not that the library cannot
+   discriminate. Two shipped sets do fail it, and they are the ones to compare
+   against: `v3.16` (ceiling 2.4%) and `v3.20` (ceiling 12.7%, against about
+   50% for the weakest cascading set on the same harness).
+
+   Use several one-character pairs, not one; a single pair can land on two
+   near-identical blocks and read 0.00%. Measure every library you compare on
+   the **same** harness, re-measuring the existing ones alongside, because
+   figures from different phrases, rasterizers or tolerances do not compare.
+   And use a per-channel tolerance a person can see (±16, then ±48 to confirm).
+   A recolor of `v3.20` looked like a rescue at ±4 (82% ceiling), but at ±48 it
+   fell back to 0.01% on some pairs, and side by side it looked like the
+   original. When a pixel figure and the screenshot disagree, believe the
+   screenshot. `v3.13` measures 2.18% and ships unrecoloured because it
    is line art whose blocks differ by drawing; `v3.14` measures 3.03% and has no
    `rect.canvas` rule at all — its background is four `<rect>` quadrants with
    inline fills — so `recolor.py` stops rather than guessing, which is right.
    Recolour when the *rendering* is uniform, as `v2.11`'s was, not when a number
    is low. Report both figures either way.
 
+5. **If it fails, stop and ask before the docs.** Whether to ship a set that a
+   reader cannot read a changed character out of is a product decision, not
+   yours. Lay out the figures and three options: ship as supplied, as `v3.16`
+   and `v3.20` were; recolor or rework it, then re-measure and show the result;
+   or drop it. Leave the docs until the answer is in, because what they say
+   depends on it.
+
 ## 7. Update the docs in the same change
 
-- `public/medigeist/README.md` — the list of shipped libraries.
-- `CLAUDE.md` — the library list, and the build size if it moved.
+- `public/medigeist/README.md` — the list of shipped sets and their sizes.
+- `CLAUDE.md` — the library table, the set count and total vendored size, the
+  exact-fit list if the set has 102 blocks, and the build-size range if it moved.
+  A set kept despite failing step 6 gets its own subsection under **Judging a
+  new library**, with the figures and the decision, as `v3.16` and `v3.20` have.
+  Never make it the default or cite it in copy about visible differences.
 - `privacy.html` only if something about requests changed. Adding a vendored
   library does not change it: everything is still served from this origin.
