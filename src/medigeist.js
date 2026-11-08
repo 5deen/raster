@@ -46,6 +46,7 @@ export const LIBRARIES = [
   { id: 'cascading_orientation_pattern_v3.15', label: 'Cascading orientation v3.15' },
   { id: 'cascading_orientation_pattern_v2.11', label: 'Cascading orientation v2.11' },
   { id: 'cascading_square_pattern_v3.16', label: 'Cascading square v3.16' },
+  { id: 'network_pattern_v3.20', label: 'Network v3.20' },
 ];
 
 /** The library the demo opens with. */
