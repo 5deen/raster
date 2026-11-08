@@ -28,7 +28,8 @@ export const GLYPH_LIMIT = 16;
  * The block libraries offered by the demo, in order.
  *
  * `id` is the directory under public/medigeist and the name the library has in
- * the generator — the prefix its block keys share, which run `<id>_001` upwards.
+ * the generator — the prefix its block keys share, which usually run
+ * `<id>_001` upwards. Block order comes from the source file, never the keys.
  * `label` is what the picker shows. The first entry is the default.
  *
  * Everything downstream is written for a list, so adding a build means adding
