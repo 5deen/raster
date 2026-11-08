@@ -42,10 +42,12 @@ Settle these early; they change code, not just words.
 - **Positioning and copy.** Nothing in this repo should be lifted from
   geistgrid's landing page. The product claim, the use cases and the threat-model
   section are to be written for raster.
-- **Which libraries ship.** geistgrid shipped five, 7.4 MB vendored. Only the
-  selected one is ever downloaded, so this costs repository size rather than
-  page weight — but five entries in a picker is a lot to explain. See the
-  generator section for what each one is.
+- **Which libraries ship.** Five came from geistgrid at 7.4 MB vendored, and
+  `cascading_square_pattern_v3.16` adds 3.3 MB on top. Only the selected one is
+  ever downloaded, so this costs repository size rather than page weight — but
+  six entries in a picker is a lot to explain, and one of them does not
+  discriminate. See the generator section for what each one is; `v3.16` is the
+  first candidate to drop.
 - **Hosting** is settled: GitHub Pages at `5deen.github.io/raster/`, so
   section 4 of `privacy.html` naming GitHub, Inc. as host and processor stays
   accurate. If that ever changes — to Vercel, or to a custom domain — the
@@ -121,9 +123,10 @@ four places — the build, `public/medigeist/<id>/`, `medigeist-src/` and
 `LIBRARIES` — and missing one leaves either a picker entry that 404s or a
 megabyte of dead weight. Use them rather than doing it by hand.
 
-### The libraries inherited from geistgrid
+### The libraries
 
-Each is named after the prefix its block keys share; keys run `<id>_001` upwards.
+The first five are inherited from geistgrid. Each is named after the prefix its
+block keys share; keys run `<id>_001` upwards.
 
 | Library | Blocks | Build | What it looks like |
 | --- | --- | --- | --- |
@@ -132,8 +135,13 @@ Each is named after the prefix its block keys share; keys run `<id>_001` upwards
 | `cascading_orientation_pattern_v3.14` | 128 | ~1.6 MB | four-quadrant split, sage/brown |
 | `cascading_orientation_pattern_v3.15` | 102 | ~1.3 MB | lavender/navy half-split, per-block rotation |
 | `cascading_orientation_pattern_v2.11` | 193 | ~1.7 MB | blue; recolored, see below |
+| `cascading_square_pattern_v3.16` | 102 | ~3.3 MB | one black cell in a 10×10 grid; **does not discriminate**, see below |
 
-A library id can carry a **dot**, as all five do. AssemblyScript identifiers and
+`v3.16` is the first library outside the `cascading_orientation_pattern` family
+and the first that does not meet the bar in **Judging a new library** below. It
+was added on request with the measurement attached rather than silently.
+
+A library id can carry a **dot**, as all six do. AssemblyScript identifiers and
 module filenames cannot, so the map binding and the file under `medigeist-src/`
 use `_` where the id uses `.` (`cascading_orientation_pattern_v3_12`). The id
 with the dot is what the vendored directory, the `LIBRARIES` entry and the saved
@@ -151,18 +159,24 @@ separate repository this one cannot push to.
   (`a–z A–Z 0–9`, punctuation, `ÄÖÜäöü ß`), and the mapping is positional: the
   Nth character draws block N. So **only blocks 001–102 are ever reachable**.
   `v3.12` and `v2.11` carry 193 blocks and can never draw 91 of them; `v3.14`
-  can never draw 26. `v3.13` and `v3.15` are exact fits. Trimming the oversized
-  libraries to 102 blocks would cut roughly 0.4 MB each with provably identical
-  output — worth doing only if the glyph table is not going to grow.
+  can never draw 26. `v3.13`, `v3.15` and `v3.16` are exact fits. Trimming the
+  oversized libraries to 102 blocks would cut roughly 0.4 MB each with provably
+  identical output — worth doing only if the glyph table is not going to grow.
 - **One document shows at most 16 distinct blocks**, one per distinct character
   read. This is a property of the glyph limit, not a bug.
 - **Every build exposes exactly one image set, always `set0`**, because
   `setMapsArray()` names sets positionally. That name is hard-coded in
   `medigeist.js`; it is not a free choice.
-- **A build is 1.3–1.7 MB.** Builds are fetched lazily — when the demo scrolls
+- **A build is 1.3–3.3 MB.** Builds are fetched lazily — when the demo scrolls
   near or the field is focused, never on page load — cached per library, and
   keystrokes are debounced. Do not move the first render back to load time.
   Only the selected library is downloaded; do not preload the others.
+  Within the `cascading_orientation_pattern` family the size tracks the block
+  count, but what it really tracks is the byte length of the base64 payloads —
+  AssemblyScript holds those strings as UTF-16, so a build is about twice its
+  `medigeist-src/` file. That is why `v3.16` reaches 3.3 MB on 102 blocks: each
+  of its blocks is a hundred `<rect>` elements. Its renders are ~290 KB rather
+  than ~150 KB.
 - **It runs entirely in the browser**, every file served from this origin, which
   is what keeps the privacy claims true.
 - **Its output carries the phrase in plain text.** Every document opens with a
@@ -226,20 +240,64 @@ two *unrelated* phrases too — that is the ceiling.
 | `v3.15` | 2.26% | 95.0% |
 | `v2.11` | 9.47% | — |
 
-Every library clears 93% on unrelated phrases, so they all discriminate. What
+Those five clear 93% on unrelated phrases, so they all discriminate. What
 varies is how much a *single* character moves, and a low figure means something
 different in each case — `v3.13` is line art whose blocks differ by drawing,
 `v3.15` by the angle of a high-contrast edge. **The number is evidence, not a
 verdict: read it alongside the rendering.**
 
-The one real failure looked like this: as supplied, every block in `v2.11` shared
-one canvas fill, so it rendered as a uniform dot field — deterministic, and
-unreadable, at 0.6%. `.claude/skills/add-library/recolor.py` fixed it to 9.47%
-by giving each block the reference library's *position* within its hue,
-lightness and saturation ranges, remapped into `v2.11`'s own bands. Recolor when
-the **rendering** is uniform, not when a number is low. The script rewrites a
-`rect.canvas` fill and stops on a library that colors itself another way —
-`v3.14` paints inline fills on quadrant rects — which is the correct outcome.
+The one real failure in the inherited set looked like this: as supplied, every
+block in `v2.11` shared one canvas fill, so it rendered as a uniform dot field —
+deterministic, and unreadable, at 0.6%. `.claude/skills/add-library/recolor.py`
+fixed it to 9.47% by giving each block the reference library's *position* within
+its hue, lightness and saturation ranges, remapped into `v2.11`'s own bands.
+Recolor when the **rendering** is uniform, not when a number is low. The script
+rewrites a `rect.canvas` fill and stops on a library that colors itself another
+way — `v3.14` paints inline fills on quadrant rects — which is the correct
+outcome.
+
+#### `v3.16` is the case the bar exists for
+
+Every block is the same white square carrying a 10×10 grid of 100 cells with
+exactly **one** black cell. Block `_001` is blank, `_102` is solid, and the
+hundred between them are a single black dot in a different one of the hundred
+positions. Combined with the positional mapping above, the Nth character simply
+moves a dot to the Nth cell. The blocks are distinct and the generator is
+perfectly deterministic, but any two blocks agree on 98 of their 100 cells, so a
+changed character moves one dot and the picture does not change in a way a
+reader can see.
+
+Measured across all six libraries on one harness at 1080², a 16-character phrase
+against the same phrase one character off, and against an unrelated phrase:
+
+| Library | One character off | Unrelated phrase |
+| --- | --- | --- |
+| `v3.12` | 5.60% | 83.7% |
+| `v3.13` | 1.45% | 33.8% |
+| `v3.14` | 3.67% | 43.3% |
+| `v3.15` | 1.37% | 32.9% |
+| `v2.11` | 5.20% | 82.3% |
+| `v3.16` | **0.13%** | **2.87%** |
+
+These read lower than the table above — different phrases, rasterizer and
+per-channel tolerance — which is why all six are re-measured together here
+rather than compared across harnesses. What survives the change of harness is
+the shape: `v3.16`'s **ceiling** is 2.87%, an order of magnitude below the
+lowest of the other five and *below their one-character figures*. Two unrelated
+phrases render near-identically. That is the one property a library cannot
+lack, because the whole claim is that a wrong character is visible.
+
+`recolor.py` cannot rescue it and should not be tried: the grid cells carry
+inline `fill` attributes with no `rect.canvas` rule, so the script stops — and
+the uniformity is geometric anyway. Ninety-eight of a hundred cells are shared
+between any two blocks, and no palette changes that. A library of this shape
+needs more black cells per block, varying in *position and count*, before it
+discriminates at all.
+
+It is registered and the picker offers it. If the page's claim is to be taken at
+face value it should come out again — `remove-library` does that in one pass —
+or be replaced by a build whose blocks differ by more than one cell in a
+hundred.
 
 ## Legal pages
 

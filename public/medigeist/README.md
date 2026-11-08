@@ -4,7 +4,7 @@ Prebuilt WebAssembly build of [asc-set-generator](https://github.com/5deen/asc-s
 vendored so the demo has no external dependency. MIT licensed.
 
 One directory per block library, named after the prefix its block keys share.
-The demo ships five:
+The demo ships six:
 
 | Directory | Blocks | Keys | Build |
 | --- | --- | --- | --- |
@@ -13,9 +13,19 @@ The demo ships five:
 | `cascading_orientation_pattern_v3.14` | 128 | `…_001` … `_128` | ~1.5 MB |
 | `cascading_orientation_pattern_v3.15` | 102 | `…_001` … `_102` | ~1.3 MB |
 | `cascading_orientation_pattern_v2.11` | 193 | `…_001` … `_193` | ~1.7 MB |
+| `cascading_square_pattern_v3.16` | 102 | `…_001` … `_102` | ~3.3 MB |
 
-The build size tracks the block count, which is the only thing that varies
-between them at this scale.
+Across the five `cascading_orientation_pattern` libraries the build size tracks
+the block count, which is the only thing that varies between them at that scale.
+`cascading_square_pattern_v3.16` breaks that rule: same 102 blocks as `v3.13`
+and `v3.15`, two and a half times their size, because each of its blocks is a
+10×10 grid of 100 `<rect>` elements rather than a handful of shapes. What the
+size really tracks is the byte length of the base64 payloads in the source —
+AssemblyScript stores those strings as UTF-16, so a build lands at roughly twice
+its `medigeist-src/` file.
+
+`v3.16` does not discriminate: see **Judging a new library** in `CLAUDE.md`
+before relying on it.
 
 A library name can carry a dot, as these do. AssemblyScript identifiers and
 module filenames cannot, so the map binding and the file under `medigeist-src/`
