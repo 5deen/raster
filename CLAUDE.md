@@ -2,15 +2,21 @@
 
 Guidance for Claude Code when working in this repository.
 
-> **Draft.** Written during the extraction from `5deen/geistgrid`, before raster
-> had any history of its own. Everything under **Open decisions** is a
-> placeholder the first sessions should settle and then delete. Everything else
-> was verified true in geistgrid and travels unchanged.
-
 ## Project
 
-**raster** is a product of 5deen, served under `5deen.com`. It turns a text
-phrase into a deterministic grid of colored geometric shapes.
+**Raster** is a product of 5deen, published at
+<https://5deen.github.io/raster/>. It turns a text phrase into a deterministic
+grid of colored geometric shapes.
+
+The name is written **Raster**, capitalized, in site copy; the lowercase form
+appears only in the repository name, the package name, the `base` path and the
+saved-file prefix. It was questioned once and kept. The objection was real — the
+product's central claim is that the SVG *is* the exact document and the PNG only
+a picture of it, so naming the product after the lossy half invites the wrong
+reading. The copy answers that rather than the name: SVG is the primary download
+button and `### Downloads` below says why hash-comparing a PNG does not work.
+Reopen it only with a concrete replacement, and note that the name is now in the
+repository, the deployed URL, the saved-file prefix and the published copy.
 
 The core flow:
 
@@ -35,29 +41,15 @@ on.
 
 Site copy is **US English**, and every page carries `lang="en-US"`.
 
-## Open decisions
+## The landing page copy
 
-Settle these early; they change code, not just words.
-
-- **Positioning and copy.** Nothing in this repo should be lifted from
-  geistgrid's landing page. The product claim, the use cases and the threat-model
-  section are to be written for raster.
-- **Which libraries ship.** Five came from geistgrid at 7.4 MB vendored, and
-  `cascading_square_pattern_v3.16` adds 3.3 MB on top. Only the selected one is
-  ever downloaded, so this costs repository size rather than page weight — but
-  six entries in a picker is a lot to explain, and one of them does not
-  discriminate. See the generator section for what each one is; `v3.16` is the
-  first candidate to drop.
-- **Hosting** is settled: GitHub Pages at `5deen.github.io/raster/`, so
-  section 4 of `privacy.html` naming GitHub, Inc. as host and processor stays
-  accurate. If that ever changes — to Vercel, or to a custom domain — the
-  workflow, the `base` path and that section of the privacy policy move
-  together.
-- **Palette.** The tokens below are geistgrid's and are inherited, not decided.
-  If they change, keep the contrast floors.
-- **The name.** The product's central claim is that the **SVG is the exact
-  document** and the PNG is only a picture of it. "raster" names the lossy half.
-  Worth resolving before the copy is written around it.
+Written for raster and **nothing is lifted from geistgrid**. The sections are
+`#what-this-is`, `#proof`, `#how-it-works`, `#demo` and `#use-cases`; the hero,
+the proof-by-comparison argument, the three steps and the use cases are all
+raster's own. `#proof` makes the strongest claim on the page — that matching
+pictures prove ownership — and closes by pointing at `#what-this-is`, which
+bounds it: a public generator means a guessable phrase can be found from its own
+pattern. Keep that qualifier attached to the claim.
 
 ## Commands
 
@@ -96,6 +88,14 @@ and lands on `5deen.github.io`.
 
 `base` tracks the **repository name**, not the product name. They agree today.
 Rename the repo and this is the one line to change, or every asset 404s.
+
+Hosting is **settled on GitHub Pages**, with no custom domain: there is no
+`public/CNAME`, and `5deen.com` is the contact domain only. This is what keeps
+section 4 of `privacy.html` true, which names GitHub, Inc. and its address as
+the host and processor and declares the transfer to the United States. That
+section is a factual statement about a processor, not boilerplate. Moving the
+site to Vercel, or putting a custom domain in front, means changing the
+workflow, the `base` path and that section of the privacy policy in one change.
 
 If raster later moves to its own domain at a root, `base` becomes `/`, a
 `public/CNAME` is needed, and the relative-link discipline above stops being
@@ -137,9 +137,19 @@ block keys share; keys run `<id>_001` upwards.
 | `cascading_orientation_pattern_v2.11` | 193 | ~1.7 MB | blue; recolored, see below |
 | `cascading_square_pattern_v3.16` | 102 | ~3.3 MB | one black cell in a 10×10 grid; **does not discriminate**, see below |
 
+**The shipping set is settled at these six, 10.7 MB vendored**, and that
+includes `v3.16`. Only the selected library is ever downloaded, so the cost is
+repository size rather than page weight, and growing the set is one
+`add-library` pass.
+
 `v3.16` is the first library outside the `cascading_orientation_pattern` family
-and the first that does not meet the bar in **Judging a new library** below. It
-was added on request with the measurement attached rather than silently.
+and the only one that does not meet the bar in **Judging a new library** below.
+It was added on request, measured, and **kept on an explicit decision** with the
+figures recorded rather than buried. Do not drop it as a tidy-up: removing it is
+a product decision, the same as adding it was. What the measurement means for
+the page is the part to keep in view — the picker offers a set that a reader
+cannot read a changed character out of, so do not cite `v3.16` in copy about
+patterns being visibly different, and do not make it the default.
 
 A library id can carry a **dot**, as all six do. AssemblyScript identifiers and
 module filenames cannot, so the map binding and the file under `medigeist-src/`
@@ -294,10 +304,19 @@ between any two blocks, and no palette changes that. A library of this shape
 needs more black cells per block, varying in *position and count*, before it
 discriminates at all.
 
-It is registered and the picker offers it. If the page's claim is to be taken at
-face value it should come out again — `remove-library` does that in one pass —
-or be replaced by a build whose blocks differ by more than one cell in a
-hundred.
+**It ships anyway, by decision.** This was weighed with the figures in hand and
+`v3.16` was kept, so treat it as settled rather than as an oversight to correct.
+What follows from keeping it:
+
+- It is **not** the default. `LIBRARIES[0]` is `v3.12`, and the entry order is
+  what sets the default — do not reorder the list without re-reading this.
+- No page copy may cite it as an example of a changed character being visible,
+  because for this library that is not true.
+- A better version of the same idea would vary the black cells in *count* as
+  well as position. If one arrives, replace `v3.16` rather than adding a
+  seventh set beside it.
+
+Dropping it later is a product decision and takes one `remove-library` pass.
 
 ## Legal pages
 
@@ -336,7 +355,10 @@ is missing — an unconfigured deploy should say so rather than link to nowhere.
 
 ## Design tokens
 
-Inherited from geistgrid and open to change, but the contrast floors are not:
+Inherited from geistgrid and **kept deliberately** — they were reviewed and not
+rebranded, so this is the palette rather than a placeholder. Changing it is an
+ordinary design task, not a pending decision. The contrast floors below it are
+not negotiable either way:
 
 | Token | Value | Used for |
 | --- | --- | --- |
